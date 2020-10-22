@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>VOJ Caro</title>
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
+</head>
+<body>
+  <div class="container pt-5" id="main">
+    <div class="row text-center">
+      <div class="col-md-12 mb-4">
+        <h1>VOJ Caro</h1>
+      </div>
+      <div class="col-md-12" v-if="!problemStr || !participant1 || !participant2">
+        Missing required querystring parameters
+      </div>
+      <div class="col-md-12" v-else>
+        <div class="row">
+          <div class="col-md-12 mb-3">
+            <b>Update status</b>: {{ updateStatus }}. Next update in {{ nextUpdate }}
+          </div>
+          <div class="col-md-12 mb-5">
+            <b>
+              Participants: 
+              <span class="text-success">{{ participant1 }}</span>,
+              <span class="text-warning">{{ participant2 }}</span>
+            </b>
+          </div>
+          <div class="col-md-12">
+            <table class="mx-auto w-auto" v-if="problems.length == 9">
+              <tr v-for="row in 3">
+                <td v-for="col in 3" :class="{ 'bg-success': status.length == 9 && status[(row - 1) * 3 + col - 1].user == participant1 && status[(row - 1) * 3 + col - 1].AC, 'text-white': status.length == 9 && status[(row - 1) * 3 + col - 1].user == participant1 && status[(row - 1) * 3 + col - 1].AC, 'bg-warning': status.length == 9 && status[(row - 1) * 3 + col - 1].user == participant2 && status[(row - 1) * 3 + col - 1].AC }">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <b>
+                        <a :href="problems[(row - 1) * 3 + col - 1].url" target="_blank" class="text-dark">
+                          {{ problems[(row - 1) * 3 + col - 1].name }}
+                        </a>
+                      </b>
+                    </div>
+                    <div class="col-md-12" v-if="status.length == 9 && status[(row - 1) * 3 + col - 1].user">
+                      ({{ status[(row - 1) * 3 + col - 1].user }}: {{ status[(row - 1) * 3 + col - 1].AC ? 'AC' : status[(row - 1) * 3 + col - 1].score }})
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- {{ problemStr }} -->
+  </div>
+
+  <!-- jQuery and JS bundle w/ Popper.js -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js" integrity="sha512-quHCp3WbBNkwLfYUMd+KwBAgpVukJu5MncuQaWXgCrfgcxCJAq/fo+oqrRKOj+UKEmyMCG3tb8RB63W+EmrOBg==" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.12/vue.min.js" integrity="sha512-BKbSR+cfyxLdMAsE0naLReFSLg8/pjbgfxHh/k/kUC82Hy7r6HtR5hLhobaln2gcTvzkyyehrdREdjpsQwy2Jw==" crossorigin="anonymous"></script>
+  <script src="/assets/js/main.js"></script>
+</body>
+</html>
