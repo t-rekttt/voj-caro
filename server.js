@@ -30,8 +30,6 @@ app.get('/judge', async(req, res) => {
       return core.judge(contestId, problem, startTime, participant1, participant2);
     }));
 
-    console.log(judged);
-
     return res.success(judged);
   } catch (err) {
     console.log(err);
