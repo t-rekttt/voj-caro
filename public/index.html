@@ -8,14 +8,26 @@
 </head>
 <body>
   <div class="container pt-5" id="main">
-    <div class="row text-center">
-      <div class="col-md-12 mb-4">
+    <div class="row">
+      <div class="col-md-12 mb-4 text-center">
         <h1>VOJ Caro</h1>
       </div>
-      <div class="col-md-12" v-if="!problemStr || !participant1 || !participant2">
-        Missing required querystring parameters
+      <div class="col-md-6 offset-md-3" v-if="!problemStr || !participant1 || !participant2">
+        <form action="/create" method="GET">
+          <div class="form-group">
+            <label for="participant1">Participant 1</label>
+            <input type="text" class="form-control" id="participant1" name="participant1" placeholder="Participant 1 handle">
+          </div>
+          <div class="form-group">
+            <label for="participant2">Participant 2</label>
+            <input type="text" class="form-control" id="participant2" name="participant2" placeholder="Participant 2 handle">
+          </div>
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary">Create board</button>
+          </div>
+        </form>
       </div>
-      <div class="col-md-12" v-else>
+      <div class="col-md-12 text-center" v-else>
         <div class="row">
           <div class="col-md-12 mb-3">
             <b>Update status</b>: {{ updateStatus }}. Next update in {{ nextUpdate }}
