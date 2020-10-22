@@ -32,6 +32,11 @@
           <div class="col-md-12 mb-3">
             <b>Update status</b>: {{ updateStatus }}. Next update in {{ nextUpdate }}
           </div>
+          <div class="col-md-12 mb-3" v-if="winner">
+            <h3>
+              <b>Winner</b>: <span :class="{ 'text-success': winner == participant1, 'text-warning': winner == participant2 }">{{ winner }}</span>
+            </h3>
+          </div>
           <div class="col-md-12 mb-5">
             <b>
               Participants: 
