@@ -50,16 +50,11 @@ app.get('/create', async(req, res) => {
 
     let problems = core.problemPick(9)
 
-    // problems = problems.map(problem => `${problem.url.split('/').reverse()[2]}:${problem.problem}`).join(',');
+    problems = problems.map(problem => `${problem.url.split('/').reverse()[2]}:${problem.problem}`).join(',');
 
     let startTime = Date.now();
 
-    return res.success({
-      problems,
-      startTime,
-      participant1,
-      participant2
-    });
+    return res.redirect(`/?problems=${problems}&participant1=${participant1}&participant2=${participant2}&startTime=${startTime}`);
   } catch (err) {
     console.log(err);
 
