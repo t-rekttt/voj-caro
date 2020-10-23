@@ -24,7 +24,9 @@ let judge = async(contestId, problem, startTime, participant1, participant2) => 
 
   let submissions = submissionsParticipant1.concat(submissionsParticipant2);
 
-  submissions = submissions.map(submission => {
+  submissions = submissions.filter(submission => {
+    return submission.verdict.includes('Perfect') || submission.verdict.includes('Partial');
+  }).map(submission => {
     if (submission.verdict.includes('Perfect')) {
       submission.AC = true;
     }
@@ -56,6 +58,8 @@ let judge = async(contestId, problem, startTime, participant1, participant2) => 
 }
 
 let getProblemsInfo = problemStr => {
+  if (!problemStr) return [];
+
   let problems = problemStr.split(',');
 
   return problems.map(problemInfo => {

@@ -115,11 +115,13 @@ new Vue({
         let row = ~~(move.index / 3);
         let col = move.index % 3;
 
-        board[row][col] = move.user;
+        if (move.AC) {
+          board[row][col] = move.user;
 
-        let winner = this.checkWinner(board);
+          let winner = this.checkWinner(board);
 
-        if (winner !== null) return winner;
+          if (winner !== null) return winner;
+        }
       }
 
       return null;
