@@ -139,8 +139,10 @@ new Vue({
         this.status = judgeResult.data.data;
 
         this.winner = this.stats(this.status);
+        return true;
       } catch (err) {
         console.log(err);
+        return false;
       } finally {
         this.updateStatus = 'Idle';
       }
@@ -151,9 +153,11 @@ new Vue({
         await new Promise(cb => setTimeout(() => cb(), 1000));
       }
 
-      await this.update();
-
-      this.nextUpdate = 30;
+      if (await this.update()) {
+        this.nextUpdate = 30;
+      } else {
+        this.nextUpdate = 60;
+      }
 
       this.scheduleUpdate();
     }
