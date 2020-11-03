@@ -127,19 +127,23 @@ new Vue({
       return null;
     },
     async update() {
-      this.updateStatus = 'Updating...';
+      try {
+        this.updateStatus = 'Updating...';
 
-      let problemsInfo = await this.getProblemsInfo(this.problemStr);
-      
-      this.problems = problemsInfo.data.data;
+        let problemsInfo = await this.getProblemsInfo(this.problemStr);
+        
+        this.problems = problemsInfo.data.data;
 
-      let judgeResult = await this.judge(this.problemStr, this.startTime, this.participant1, this.participant2);
+        let judgeResult = await this.judge(this.problemStr, this.startTime, this.participant1, this.participant2);
 
-      this.status = judgeResult.data.data;
+        this.status = judgeResult.data.data;
 
-      this.winner = this.stats(this.status);
-
-      this.updateStatus = 'Idle';
+        this.winner = this.stats(this.status);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        this.updateStatus = 'Idle';
+      }
     },
     async scheduleUpdate() {
       while (this.nextUpdate > 0) {
@@ -149,7 +153,7 @@ new Vue({
 
       await this.update();
 
-      this.nextUpdate = 10;
+      this.nextUpdate = 30;
 
       this.scheduleUpdate();
     }
