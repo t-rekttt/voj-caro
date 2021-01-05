@@ -4,6 +4,10 @@ let fs = require('fs');
 
 let group = 'FLVn1Sc504';
 
+let ACVerdicts = ['Happy New Year!', 'Accepted', 'Perfect'];
+
+let partialVerdicts = ['Partial'];
+
 let problems = JSON.parse(fs.readFileSync('./problems.json', 'utf-8'));
 
 let problemsObj = problems.reduce((curr, problem) => {
@@ -25,10 +29,19 @@ let judge = async(contestId, problem, startTime, participant1, participant2) => 
   let submissions = submissionsParticipant1.concat(submissionsParticipant2);
 
   submissions = submissions.filter(submission => {
-    return submission.verdict.includes('Perfect') || submission.verdict.includes('Partial');
+    let neededVerdicts = ACVerdicts.concat(partialVerdicts);
+
+    for (let verdict of neededVerdicts)
+      if (submission.verdict.includes(verdict))
+        return true;
+    
+    return false;
   }).map(submission => {
-    if (submission.verdict.includes('Perfect')) {
-      submission.AC = true;
+    for (let verdict of ACVerdicts) {
+      if (submission.verdict.includes(verdict)) {
+        submission.AC = true;
+        break
+      }
     }
 
     if (submission.verdict.includes('Perfect') || submission.verdict.includes('Partial')) {
